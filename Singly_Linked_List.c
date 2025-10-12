@@ -56,9 +56,9 @@ void display(Node *head)
 int main()
 {
     Node *head = NULL;
-    head = append(head, 10);
-    append(head, 20);
-    append(head, 30);
-
+    for(int i = 10;i <= 90; i++)
+    {
+        head = append(head, i); 
+    }
     display(head);
 }
