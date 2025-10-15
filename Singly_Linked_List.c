@@ -42,6 +42,23 @@ Node *append(Node *head, int data)
     return head;
 }
 
+Node *prepend(Node *head, int data)
+{
+    //Create a new node
+    Node *n = (Node*) malloc(sizeof(Node));
+    n->data = data;
+    n->next = NULL;
+    //if this node is the first node of the linked list
+    if(head==NULL)
+    {
+        head = n;
+        return head;
+    }
+    n->next = head;
+    head = n;
+    return head;
+}
+
 /*Display function prints the Singly Linked List*/
 void display(Node *head)
 {
@@ -56,9 +73,13 @@ void display(Node *head)
 int main()
 {
     Node *head = NULL;
-    for(int i = 10;i <= 90; i++)
+    for(int i = 10; i <=20 ; i+=5)
     {
         head = append(head, i); 
+    }
+    for(int i = 5; i >= -20 ; i-=5)
+    {
+        head = prepend(head, i);
     }
     display(head);
 }
