@@ -94,6 +94,84 @@ Node *insertAtPosition(Node *head, int data, int position)
     return head;
 }
 
+Node *deleteAtEnd(Node *head)
+{
+    //If the linked list is empty
+    if(head==NULL)
+    {
+        printf("Linked List is empty\n");
+        return head;
+    }
+    //If the linked list has only one node
+    if(head->next==NULL)
+    {
+        free(head);
+        head = NULL;
+        return head;
+    }
+    Node *ptr = head;
+    //Traverse to the second last node
+    while(ptr->next->next != NULL)
+    {
+        ptr = ptr->next;
+    }
+    //Free the last node and set the next of second last node to NULL
+    free(ptr->next);
+    ptr->next = NULL;
+
+    return head;
+}
+
+Node* deleteAtPosition(Node *head, int position)
+{
+    //If the linked list is empty
+    if(head==NULL)
+    {
+        printf("Linked List is empty\n");
+        return head;
+    }
+    //If the position is 0, delete the head node
+    if(position==0)
+    {
+        Node *temp = head;
+        head = head->next;
+        free(temp);
+        return head;
+    }
+    Node *ptr = head;
+    //Traverse to the node just before the desired position
+    for(int i=0; i<position-1 && ptr!=NULL; i++)
+    {
+        ptr = ptr->next;
+    }
+    //If ptr is NULL or ptr->next is NULL, it means position is out of bounds
+    if(ptr==NULL || ptr->next==NULL)
+    {
+        printf("Position out of bounds\n");
+        return head;
+    }
+    //Delete the node at the desired position
+    Node *temp = ptr->next;
+    ptr->next = ptr->next->next;
+    free(temp);
+
+    return head;
+}
+
+Node *deleteAtbeginning(Node *head)
+{
+    //If the linked list is empty
+    if(head==NULL)
+    {
+        printf("Linked List is empty\n");
+        return head;
+    }
+    Node *temp = head;
+    head = head->next;
+    free(temp);
+    return head;
+}
+
 /*Display function prints the Singly Linked List*/
 void display(Node *head)
 {
@@ -116,5 +194,7 @@ int main()
     {
         head = prepend(head, i);
     }
+
+    head = insertAtPosition(head, 99, 4);
     display(head);
 }
