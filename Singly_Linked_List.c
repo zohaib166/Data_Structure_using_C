@@ -59,6 +59,41 @@ Node *prepend(Node *head, int data)
     return head;
 }
 
+Node *insertAtPosition(Node *head, int data, int position)
+{
+    //Create a new node
+    Node *n = (Node*) malloc(sizeof(Node));
+    n->data = data;
+    n->next = NULL;
+
+    //If the linked list is empty or position is 0, make the new node as head
+    if(head==NULL || position==0)
+    {
+        n->next = head;
+        head = n;
+        return head;
+    }
+
+    Node *ptr = head;
+    //Traverse to the node just before the desired position
+    for(int i=0; i<position-1 && ptr!=NULL; i++)
+    {
+        ptr = ptr->next;
+    }
+    //If ptr is NULL, it means position is greater than the length of the linked list
+    if(ptr==NULL)
+    {
+        printf("Position out of bounds\n");
+        free(n);
+        return head;
+    }
+    //Insert the new node at the desired position
+    n->next = ptr->next;
+    ptr->next = n;
+
+    return head;
+}
+
 /*Display function prints the Singly Linked List*/
 void display(Node *head)
 {
