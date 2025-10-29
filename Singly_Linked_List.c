@@ -181,6 +181,7 @@ void display(Node *head)
         printf("%d ", ptr->data);
         ptr=ptr->next;
     }
+    printf("\n");
 }
 
 int main()
@@ -195,6 +196,10 @@ int main()
         head = prepend(head, i);
     }
 
+    display(head);
     head = insertAtPosition(head, 99, 4);
+    display(head);
+
+    head = deleteAtPosition(head, 3);
     display(head);
 }
