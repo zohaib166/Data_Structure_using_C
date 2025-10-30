@@ -94,34 +94,6 @@ Node *insertAtPosition(Node *head, int data, int position)
     return head;
 }
 
-Node *deleteAtEnd(Node *head)
-{
-    //If the linked list is empty
-    if(head==NULL)
-    {
-        printf("Linked List is empty\n");
-        return head;
-    }
-    //If the linked list has only one node
-    if(head->next==NULL)
-    {
-        free(head);
-        head = NULL;
-        return head;
-    }
-    Node *ptr = head;
-    //Traverse to the second last node
-    while(ptr->next->next != NULL)
-    {
-        ptr = ptr->next;
-    }
-    //Free the last node and set the next of second last node to NULL
-    free(ptr->next);
-    ptr->next = NULL;
-
-    return head;
-}
-
 Node* deleteAtPosition(Node *head, int position)
 {
     //If the linked list is empty
