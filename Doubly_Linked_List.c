@@ -112,6 +112,40 @@ void displayForward(Node *head)
     printf("\n");
 }
 
+Node *deleteAtPosition(Node* head, int pos) 
+{
+    if(head == NULL)
+    {
+        printf("The DLL is empty\n");
+        return head;
+    }
+    Node *ptr = head;
+    if(pos == 0)
+    {
+        head = head -> next;
+        free(ptr);
+        return head;
+    }
+    for(int i=0; i<pos && ptr!=NULL; i++)
+    {
+        ptr = ptr->next;
+    }
+    if(ptr==NULL) {
+        printf("Invalid Position\n");
+        return head;
+    }
+    if(ptr != NULL)
+    {
+        ptr->prev->next = ptr->next;
+        if(ptr->next!=NULL) //of ptr is at the last
+        {
+            ptr->next->prev = ptr->prev;
+        }
+        free(ptr);
+    }
+    return head;
+}
+
 int main()
 {
     Node *head = NULL;
@@ -119,6 +153,8 @@ int main()
     head = append(head, 20);
     head = prepend(head, 5);
     head = insertAtPosition(head, 15, 2);
+    displayForward(head);
+    head = deleteAtPosition(head, 3);
     displayForward(head);
     return 0;
 }
