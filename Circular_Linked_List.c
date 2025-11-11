@@ -128,6 +128,8 @@ int main()
 {
     Node *tail = NULL;
 
+    tail = append(tail, 100);
+
     tail = prepend(tail, 50);
     tail = prepend(tail, 60);
     tail = prepend(tail, 70);
