@@ -60,11 +60,9 @@ Node *insertAtPos(Node *tail, int data, int pos)
         return tail;
     }
     Node *ptr = tail->next;
+    printf("Hello\n");
     for(int i = 0; i < pos - 1; i++)
     {
-        if(ptr == tail) {
-            break;
-        }
         ptr = ptr->next;
     }
     n->next = ptr->next;
@@ -75,10 +73,49 @@ Node *insertAtPos(Node *tail, int data, int pos)
     return tail;
 }
 
-void display(Node *tail)
+Node *deleteAtPos(Node *tail, int pos)
 {
     if(tail == NULL)
+    {
+        printf("CLL is empty\n");
+        return tail;
+    }
+
+    Node *ptr = tail->next;
+    if(pos == 0)
+    {
+        if(ptr == tail) // only node to be deleted
+        {
+            free(tail);
+            tail = NULL;
+            return tail;
+        }
+        tail->next = ptr->next;
+        free(ptr);
+        return tail;
+    }
+    Node *tptr = ptr; //trailing pointer for ptr;
+    for(int i=0; i < pos; i++)
+    {
+        tptr = ptr;
+        ptr = ptr -> next;
+    }
+
+    tptr->next = ptr->next;
+    if(ptr == tail) {
+        tail = tptr;
+    }
+    free(ptr);
+    return tail;
+}
+
+void display(Node *tail)
+{
+    if(tail == NULL) {
         printf("Linked List is empty\n");
+        return;
+    }
+        
     Node *ptr = tail->next;
     do {
         printf("%d ", ptr->data);
@@ -90,11 +127,9 @@ void display(Node *tail)
 int main()
 {
     Node *tail = NULL;
-    tail = append(tail, 10);
-    tail = append(tail, 20);
-    tail = append(tail, 30);
-    tail = append(tail, 40);
-    display(tail);
+
+    tail = append(tail, 100);
+
     tail = prepend(tail, 50);
     tail = prepend(tail, 60);
     tail = prepend(tail, 70);
@@ -103,6 +138,10 @@ int main()
     
     tail = insertAtPos(tail, 12, 3);
     display(tail);
-    tail = insertAtPos(tail, 13, 9);
+    tail = insertAtPos(tail, 13, 2);
+    display(tail);
+
+    tail = deleteAtPos(tail, 3);
+
     display(tail);
 }
