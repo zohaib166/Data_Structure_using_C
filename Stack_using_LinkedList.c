@@ -1,9 +1,11 @@
+#ifndef STD
+
 #include <stdio.h>
 #include <stdlib.h>
 
 typedef struct node
 {
-    int data;
+    char data;
     struct node *next;
 } node;
 
@@ -12,7 +14,7 @@ typedef struct stack
     node *top;
 } stack;
 
-node *createNode(int data)
+node *createNode(char data)
 {
     node *n = (node*) malloc(sizeof(node));
     n->data = data;
@@ -22,10 +24,16 @@ node *createNode(int data)
 
 void init(stack *s) {
     s->top = NULL;
-    printf("Empty stack initialized\n");
+    printf("A Stack is initialized\n");
 }
 
-void push(stack *s, int num)
+int isEmpty(stack *s) {
+    if(s->top == NULL)
+        return 1;
+    return 0;
+}
+
+void push(stack *s, char num)
 {
     node *n = createNode(num);
     if(s->top == NULL)
@@ -49,30 +57,32 @@ void pop(stack *s)
     free(temp);
 }
 
-int peek(stack *s)
+char peek(stack *s)
 {
     if(s->top == NULL)
     {
         printf("Stack is empty\n");
-        return -1;
+        return '\0';
     }
     return s->top->data;
 }
 
-int main()
-{
-    stack s;
-    init(&s);
+// int main()
+// {
+//     stack s;
+//     init(&s);
 
-    push(&s, 40);
-    push(&s, 30);
-    push(&s, 20);
+//     push(&s, 'A');
+//     push(&s, 'B');
+//     push(&s, 'C');
 
-    printf("%d\n", peek(&s));
-    pop(&s);
-    printf("%d\n", peek(&s));
-    pop(&s);
-    printf("%d\n", peek(&s));
-    pop(&s);
-    printf("%d\n", peek(&s));
-}
+//     printf("%c\n", peek(&s));
+//     pop(&s);
+//     printf("%c\n", peek(&s));
+//     pop(&s);
+//     printf("%c\n", peek(&s));
+//     pop(&s);
+//     printf("%c\n", peek(&s));
+// }
+
+#endif // INCLUDE
