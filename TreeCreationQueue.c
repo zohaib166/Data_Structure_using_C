@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #define SIZE 100
 
-typedef struct node {
+typedef struct node
+{
     struct node *left;
     int data;
     struct node *right;
@@ -12,7 +13,7 @@ typedef struct queue
 {
     int front;
     int rear;
-    Node* arr[SIZE];
+    Node *arr[SIZE];
 } queue;
 
 void init(queue *s)
@@ -21,14 +22,14 @@ void init(queue *s)
     s->rear = -1;
 }
 
-void enqueue(queue *s, Node *n)
+void enqueue(queue *s, Node *num)
 {
     if(s->rear == SIZE-1) {
         printf("\nQueue is full\n");
         return;
     }
     
-    s->arr[++s->rear] = n;
+    s->arr[++s->rear] = num;
 }
 
 void dequeue(queue *s)
@@ -55,7 +56,7 @@ Node* get_rear(queue *s) {
 }
 
 int isEmpty(queue *s) {
-    if(s->rear == s->front & s->rear != SIZE-1) {
+    if(s->front==s->rear) {
         return 1;
     }
     return 0;
@@ -70,49 +71,49 @@ Node *createNode(int data) {
 }
 
 Node *createTree() {
-    Node *root = NULL;
-    printf("Enter the data for root node: ");
-    int num;
-    scanf("%d", &num);
-    root = createNode(num);
     queue q;
     init(&q);
-    enqueue(&q,root);
-
+    printf("Enter the value of root (-1 for no data): ");
+    int num;
+    scanf("%d", &num);
+    if(num == -1) {
+        return NULL;
+    }
+    Node *n = createNode(num);
+    enqueue(&q, n);
     while(!isEmpty(&q)) {
-        Node *ptr = get_front(&q);
+        Node *temp = get_front(&q);
         dequeue(&q);
-        printf("Enter the left child of %d: ", ptr->data);
+
+        printf("Enter the value for left child of %d: ", temp->data);
         scanf("%d", &num);
-        if(num!=-1) {
+        if(num != -1) {
             Node *n = createNode(num);
-            ptr->left = n;
-            enqueue(&q,n);
+            enqueue(&q, n);
+            temp->left = n;
         }
-        printf("Enter the right child of %d: ", ptr->data);
+
+        printf("Enter the value for right child of %d: ", temp->data);
         scanf("%d", &num);
-        if(num!=-1) {
+        if(num != -1) {
             Node *n = createNode(num);
-            ptr->right = n;
-            enqueue(&q,n);
+            enqueue(&q, n);
+            temp->right = n;
         }
     }
-    return root;
+    return n;
 }
 
-void inorder(Node *p) {
-    if(p) {
-        inorder(p->left);
-        printf("%d ", p->data);
-        inorder(p->right);
+void preorder(Node *ptr) {
+    if(ptr!=NULL) {
+        printf("%d ", ptr->data);
+        preorder(ptr->left);
+        preorder(ptr->right);
     }
 }
 
 int main()
 {
-    Node *root = NULL;
-    root = createTree();
-
-    inorder(root);
-    printf("\n");
+    Node *root = createTree();
+    preorder(root);
 }
